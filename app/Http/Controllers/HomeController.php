@@ -27,32 +27,11 @@ class HomeController extends Controller
     {
 
 
-        $keyword = $request->input('keyword');
+        $companies = new Companies();
+        $posts = $companies->index_table($request);
 
-        $companies = Companies::query();
-
-
-
-
-        if(!empty($keyword)) {
-            $companies->where('company_name', 'LIKE', "%{$keyword}%")
-            ->orwhereHas('products', function ($query) use ($keyword) {
-                $query->where('product_name', 'LIKE', "%{$keyword}%");
-            })->get();
-
-        }
-
-
-
-
-
-        $posts = $companies->paginate(5);
-
-
-
-
-        return view('crud.index', compact('posts', 'keyword'));
-
+        /* return view('crud.index', compact('posts', 'keyword')); */
+        return view('crud.index', ['posts' => $posts]);
 
     }
 

@@ -19,7 +19,7 @@ class CompaniesController extends Controller
     public function index(Request $request)
     {
 
-       
+
 
        /*  $companies = Companies::all(); */
 
@@ -36,7 +36,7 @@ class CompaniesController extends Controller
      */
     public function create()
     {
-        return view('crud.index');
+
     }
 
     /**
@@ -48,35 +48,7 @@ class CompaniesController extends Controller
     public function store(Request $request)
     {
 
-        $maxUserId = Products::max('id')+1;
 
-                 // ディレクトリ名
-         $dir = 'img';
-
-         // アップロードされたファイル名を取得
-         $file_name = $request->file('image')->getClientOriginalName();
-
-
-
-         // ランダムな名前でsampleディレクトリに画像を保存
-         // $request->file('image')->store('public/' . $dir);
-
-         // 取得したファイル名で保存する
-         $request->file('image')->storeAs('public/' . $dir, $maxUserId . '_' .$file_name);
-
-         // ファイル情報をDBに保存
-        $image = new Products();
-        /* $image->name = $file_name; */
-        $image->companies_id = '11';
-        $image->product_name = '1';
-        $image->price = '1';
-        $image->stock = '11';
-        $image->comment = '1';
-        $image->img_path = 'storage/' . $dir . '/'. $maxUserId . '_'. $file_name;
-        $image->save();
-
-
-         return redirect('/');
     }
 
     /**
