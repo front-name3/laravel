@@ -30,7 +30,6 @@ class HomeController extends Controller
         $companies = new Companies();
         $posts = $companies->index_table($request);
 
-
         return view('crud.index', ['posts' => $posts]);
 
     }
