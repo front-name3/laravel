@@ -38,4 +38,23 @@ class Companies extends Model
 
   }
 
+  public function companies_save($request,$id){
+
+    $companies = Companies::findOrFail($id);
+    $companies->company_name = $request->company_name;
+    $companies->street_address = '住所';
+    $companies->representative_name = '代表者名';
+    $companies->save();
+
+  }
+
+  public function companies_destroy($id){
+
+    $companies = Companies::findOrFail($id);
+
+    // 削除
+    $companies->delete();
+
+
+  }
 }
