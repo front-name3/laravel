@@ -2,6 +2,42 @@
 
 @section('content')
 
+
+<script type="text/javascript">
+
+$(function() {
+  $('#destroy').on('click', function() {
+    var deleteConfirm = confirm('削除スタート');
+
+    $.ajaxSetup({
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+            });
+
+
+          var url = '/destroy/3'
+
+            $.ajax({
+
+                url: 'url',
+                type: 'POST'
+
+
+            }).done(function (results) {
+                //通信が成功したときの処理
+                var deleteConfirm = confirm('削除しました');
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                //通信が失敗したときの処理
+                var deleteConfirm = confirm('削除に失敗しました');
+            });
+
+
+
+  });
+});
+
+
+</script>
+
 <div class="wrapper mx-auto" style="padding-top:30px;">
 
 <!-- 検索機能ここから -->
@@ -47,8 +83,9 @@
                   <td>
                   <form action="/destroy/{{$companie->id}}" method="POST">
                     {{ csrf_field() }}
-                    <input type="submit" class="btn btn-danger btn-dell" value="削除">
+                    <input id="destroy" type="button" class="btn btn-danger btn-dell" value="削除">
                   </form>
+
                   </td>
 
                 </tr>
