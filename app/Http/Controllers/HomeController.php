@@ -50,6 +50,7 @@ class HomeController extends Controller
 
     public function show($id)
     {
+
         $companies = Companies::findOrFail($id);
         return view('crud.show')->with('companies',$companies);
     }
@@ -120,28 +121,30 @@ class HomeController extends Controller
 
     }
 
-    public function destroy($id)
-    {
-
-        try {
-            /* インスタンス呼び出し */
-            $companies = new Companies();
-            $destroy = $companies->companies_destroy($id);
-            /* インスタンス呼び出し */
-            $products = new Products();
-            $destroy = $products->products_destroy($id);
-            // データ操作を確定させる
-            DB::commit();
-        } catch(Exception $exception) {
-            // データ操作を巻き戻す
-            DB::rollBack();
-            throw $exception;
-        }
+    public function destroy(Request $request, Companies $companies) {
 
 
+         // トランザクション開始
+         DB::beginTransaction();
 
-    // リダイレクト
-    return redirect('/');
+         try {
+            $companies = Companies::findOrFail($request->id);
+            $companies->delete();
+
+
+            $Products = Products::findOrFail($request->id);
+            $Products->delete();
+             // データ操作を確定させる
+             DB::commit();
+         } catch(Exception $exception) {
+             // データ操作を巻き戻す
+             DB::rollBack();
+             throw $exception;
+         }
+
+
+
+
     }
 
 }
